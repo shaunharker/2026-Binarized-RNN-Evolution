@@ -121,7 +121,7 @@ When resuming, the checkpoint's saved `num_ff` is used.
 ```bash
 python evolve.py \
   --file ./training.txt \
-  --num-ff 7 \
+  --num-ff 1 \
   --print-every 100 \
   --checkpoint-every 10000 \
   --checkpoint-path ./checkpoint.pt \

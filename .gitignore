@@ -1,1 +1,8 @@
 training.txt
+research
+trash
+__pycache__
+NOTES.md
+*.csv
+*.txt
+*.pt

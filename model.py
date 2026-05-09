@@ -509,8 +509,11 @@ class ReferenceBRNN(nn.Module):
     forward = loss
 
     @torch.no_grad()
-    def generate(self, prompt=None, activation=None):
+    def generate(self, prompt=None, activation=None, temperature=1.0):
         device = self.initial.device
+
+        if temperature < 0:
+            raise ValueError("temperature must be >= 0")
 
         if prompt is None:
             prompt = torch.empty(0, dtype=torch.long, device=device)
@@ -527,10 +530,15 @@ class ReferenceBRNN(nn.Module):
             x = self.advance(x, tok)
 
         logits, _ = self.logits_and_carry(x)
-        token = int(torch.argmax(logits).item())
+
+        if temperature == 0:
+            token = int(torch.argmax(logits).item())
+        else:
+            probs = torch.softmax(logits / float(temperature), dim=0)
+            token = int(torch.multinomial(probs, num_samples=1).item())
 
         return token, self.advance(x, token)
-
+    
     @torch.no_grad()
     def mutate(self, target=None, index=None):
         target, index = pick_mutation(self.num_ff, target, index)
