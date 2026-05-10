@@ -272,9 +272,9 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=4096)
     parser.add_argument("--seq-len", type=int, default=256)
 
-    parser.add_argument("--lr", type=float, default=1e-4,
+    parser.add_argument("--lr", type=float, default=1e-3,
                         help="LR for sign-quantised weights")
-    parser.add_argument("--thresh-lr", type=float, default=1e-3,
+    parser.add_argument("--thresh-lr", type=float, default=1e-2,
                         help="LR for integer-quantised thresholds")
     parser.add_argument("--weight-decay", type=float, default=0.0)
     parser.add_argument("--grad-clip", type=float, default=1.0)
